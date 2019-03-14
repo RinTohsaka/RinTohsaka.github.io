@@ -1,0 +1,13 @@
+.file-size {
+    text-align: right;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+#tree {
+    width: 100%;
+}
+
+#reset {
+    cursor: pointer;
+}

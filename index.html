@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.fancytree/2.30.2/skin-win8-n/ui.fancytree.min.css" integrity="sha256-H5Y7MOisEdZ5vYepDSfid1gKwcE70xYprrcscubPvGI=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="vn.css">
+
+    <title>18禁ゲーム</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="input-group col-10">
+          <input class="form-control" type="text" name="search" aria-label="Filter files" placeholder="Filter (min. 3 characters) ...">
+          <div class="input-group-append">
+            <span class="input-group-text" id="reset">Reset</span>
+            <div class="input-group-text">Regex&nbsp;<input type="checkbox" aria-label="Enable regex filter" id="regex"></div>
+          </div>
+        </div>
+        <div class="col-1 offset-1">
+          <button class="btn btn-success float-right" data-toggle="modal" data-target="#info-modal">
+            <i class="fas fa-info-circle"></i>
+            Info
+          </button
+          >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <small id="created"></small>
+        </div>
+        <div class="col-10">
+          <small class="float-right">DrStrangelove@anime-sharing</small>
+        </div>
+      </div>
+      <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="infoModalLabel"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-3">vndb_XXXXXX</div>
+                <div class="col-9">VNDB producer id.</div>
+              </div>
+              <div class="row">
+                <div class="col-3">egs_XXXXXX</div>
+                <div class="col-9">ErogameScape producer id.</div>
+              </div>
+              <div class="row">
+                <div class="col-3">vXXXXXX</div>
+                <div class="col-9">VNDB novel id.</div>
+              </div>
+              <div class="row">
+                <div class="col-3">eXXXXXX</div>
+                <div class="col-9">ErogameScape product id.</div>
+              </div>
+              <div class="row">
+                <div class="col-3">rXXXXXX</div>
+                <div class="col-9">VNDB release id. Used for releases with multiple novels.</div>
+              </div>
+              <div class="row pt-3">
+                <div class="col-3">__MISSING__</div>
+                <div class="col-9">Some extras might be available, but not the novel itself.</div>
+              </div>
+              <div class="row">
+                <div class="col-3">__COLLECTION_rXXXXXX__</div>
+                <div class="col-9">Novel available as collection release.</div>
+              </div>
+              <div class="row">
+                <div class="col-3">__PC-98__</div>
+                <div class="col-9">Novel available as PC-98 release.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table id="tree">
+        <thead>
+          <tr>
+            <th width="90%"></th>
+            <th width="10%"></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.fancytree/2.30.2/jquery.fancytree-all-deps.min.js" integrity="sha256-YvvNBgazEMAhF+yMWUYwwiEhKyhJlqMhq5M0KGJfNrA=" crossorigin="anonymous"></script>
+    <script src="filesize.min.js"></script>
+    <script>
+      function run_filter() {
+        var tree = $.ui.fancytree.getTree();
+        var match = $("input[name=search]").val();
+        var opts = {};
+        if (match.length == 0) {
+          tree.clearFilter();
+        }
+        if (match.length < 3) {
+          return
+        }
+        if ($("#regex").is(":checked")) {
+          tree.filterBranches(function (node) {
+            return new RegExp(match, "i").test(node.title);
+          }, opts);
+        } else {
+          tree.filterBranches(match, opts);
+        }
+      }
+
+      $(function() {
+        $("#tree").fancytree({
+          source: {
+            url: "data.json",
+          },
+          extensions: [
+            "table",
+            "filter"
+          ],
+          renderColumns: function(event, data) {
+            var node = data.node, $tdList = $(node.tr).find(">td");
+            if (node.data.size !== undefined) {
+              $tdList.eq(1)
+                .text(filesize(node.data.size))
+                .addClass("file-size");
+            } else {
+              $tdList.eq(0)
+                .prop("colspan", 2)
+                .nextAll().remove();
+            }
+          },
+          filter: {
+            counter: false,
+            mode: "hide",
+            autoExpand: true,
+            nodata: true
+          },
+          postProcess: function (event, data) {
+            $("#created").text("Created: " + data.response.created);
+          }
+        });
+
+        $("input[name=search]").keyup(function (e) {
+          run_filter();
+        });
+
+        $("#reset").click(function () {
+          var tree = $.ui.fancytree.getTree();
+          tree.clearFilter();
+          $("input[name=search]").val("");
+        });
+
+        $("#regex").change(function () {
+          run_filter();
+        });
+      });
+    </script>
+  </body>
+</html>
