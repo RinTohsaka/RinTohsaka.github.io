@@ -15,7 +15,7 @@
     <div class="container">
       <div class="row mt-2 mb-2">
         <div class="input-group col-10">
-          <input class="form-control" type="text" name="search" aria-label="Filter files" placeholder="Filter (min. 3 characters) ...">
+          <input id="tree-filter" class="form-control" type="text" name="search" aria-label="Filter files" placeholder="Filter (min. 3 characters) ..." autocomplete="off" disabled>
           <div class="input-group-append">
             <span class="input-group-text" id="reset">Reset</span>
             <div class="input-group-text">Regex&nbsp;<input type="checkbox" aria-label="Enable regex filter" id="regex"></div>
@@ -132,7 +132,7 @@
             "table",
             "filter"
           ],
-          renderColumns: function(event, data) {
+          renderColumns: function (event, data) {
             var node = data.node, $tdList = $(node.tr).find(">td");
             if (node.data.size !== undefined) {
               $tdList.eq(1)
@@ -152,6 +152,9 @@
           },
           postProcess: function (event, data) {
             $("#created").text("Created: " + data.response.created);
+          },
+          init: function (event, data) {
+            $("#tree-filter").prop("disabled", false);
           }
         });
 
