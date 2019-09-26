@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="vn.css">
+
+    <title>Missing games covers</title>
+  </head>
+  <body>
+    <div class="container pt-1">
+      <div class="btn-group" role="group" aria-label="Filter by release date">
+        <button type="button" class="btn btn-primary" data-filter="all">All</button>
+        <button type="button" class="btn btn-primary" data-filter="90">90s</button>
+        <button type="button" class="btn btn-primary" data-filter="00">00s</button>
+        <button type="button" class="btn btn-primary" data-filter="10">10s</button>
+      </div>
+      <div class="btn-group" role="group" aria-label="Sorting order">
+        <button type="button" class="btn btn-success" data-sortAsc>Asc</button>
+        <button type="button" class="btn btn-success" data-sortDesc>Desc</button>
+      </div>
+      <select data-sortOrder>
+        <option value="index">Default</option>
+        <option value="released">Released</option>
+        <option value="producer">Producer</option>
+        <option value="title">Title</option>
+      </select>
+      <div id="gallery" class="filter-container mt-3"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/filterizr/2.2.3/vanilla.filterizr.min.js" integrity="sha256-+whVg8LG5/x6BsyRfaxjFAVFc4FvzUUz8P5M8HacRh0=" crossorigin="anonymous"></script>
+    <script src="covers.js"></script>
+    <script>
+      $(function () {
+        $.each(covers_data, function (index, cover) {
+          var $div = $("<div/>")
+            .attr("data-category", cover.decade)
+            .attr("data-released", cover.released)
+            .attr("data-producer", cover.producer)
+            .attr("data-title", cover.title)
+            .addClass("filtr-item")
+            .addClass("p-1")
+            .addClass("m-3")
+            .append($("<img/>")
+              .attr("src", "covers/" + cover.img)
+              .attr("alt", "sample")
+              .attr("title", "[" + cover.producer + "] " + cover.title)
+            )
+          $("#gallery").append($div);
+        });
+
+        const options = {
+          layout: "sameWidth"
+        };
+        const filterizr = new Filterizr("#gallery", options);
+      });
+    </script>
+  </body>
+</html>

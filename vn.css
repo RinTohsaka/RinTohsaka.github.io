@@ -11,3 +11,8 @@
 #reset {
     cursor: pointer;
 }
+
+.filtr-item img {
+    width: 150px;
+    height: auto;
+}
