@@ -35,6 +35,13 @@ var covers_data = [
     "title": "金田一少年の事件簿 悲報島 新たなる惨劇"
   },
   {
+    "img": "v26102.jpg",
+    "decade": "90",
+    "released": "1998-01-23",
+    "producer": "Flare",
+    "title": "Amandine"
+  },
+  {
     "img": "v18986.jpg",
     "decade": "00",
     "released": "2003-10-26",
@@ -68,6 +75,13 @@ var covers_data = [
     "released": "2004-08-15",
     "producer": "LOVERSOUL",
     "title": "希望入りパン菓子"
+  },
+  {
+    "img": "v21867.jpg",
+    "decade": "90",
+    "released": "1996-10-25",
+    "producer": "Lunar Soft",
+    "title": "遥の空 ～激闘麻雀大会編～"
   },
   {
     "img": "v21865.jpg",
@@ -152,6 +166,20 @@ var covers_data = [
     "released": "2001-11-30",
     "producer": "URAN",
     "title": "駅弁"
+  },
+  {
+    "img": "v14314.jpg",
+    "decade": "90",
+    "released": "1993-XX-XX",
+    "producer": "Yano Electric Co., Ltd.",
+    "title": "Cosmology of Kyoto"
+  },
+  {
+    "img": "v158.jpg",
+    "decade": "90",
+    "released": "1994-09-20",
+    "producer": "ZyX",
+    "title": "雷の戦士ライディ"
   },
   {
     "img": "v24925.jpg",
